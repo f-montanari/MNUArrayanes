@@ -1,0 +1,32 @@
+<resources>
+
+    <!-- Common strings  -->
+    <string name="app_name">MNU Los Arrayanes</string>
+    <string name="Name">Nombre</string>
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Cancelar</string>
+    <string name="no_connection">Sin conexión</string>
+
+    <!-- Strings for device pairing -->
+    <string name="action_settings">Conectar a Servidor</string>
+    <string name="button_connect">Conectar</string>
+    <string name="disconnect">Desconectar</string>
+    <string name="title_activity_saved_connections">Administrador de Conexiones</string>
+    <string name="paired_devices">Dispositivos:</string>
+    <string name="add_server">Añadir Servidor</string>
+    <string name="ipAddress">Dirección IP</string>
+    <string name="portNumber">Puerto</string>
+    <string name="title_activity_app_settings">Ajustes</string>
+    <string name="connections">Conexiones</string>
+    <string name="title_activity_summary">Resumen</string>
+
+    <!--Main activity Strings -->
+    <string name="aprobados">A Favor</string>
+    <string name="abstenciones">Abstenciones</string>
+    <string name="desaprobados">En Contra</string>
+    <string name="title_activity_first_run">Primeros Pasos</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_vote">Votación entrante</string>
+    <string name="erase_connection_data">Borrar datos de conexión</string>
+    <string name="erase_application_data">Borrar datos de aplicación</string>
+</resources>

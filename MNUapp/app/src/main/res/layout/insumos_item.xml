@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/lblVotacionTitle"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_marginLeft="5dp"
+        android:text="Test text"
+        android:layout_marginTop="5dp"
+        android:layout_height="40dp"
+        android:elegantTextHeight="true"
+        android:gravity="center_vertical|center_horizontal" />
+    <!--
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:id="@+id/np"
+        android:fadeScrollbars="true" />
+    -->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnRemoveVotacion"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:text="-"/>
+        <EditText
+            android:inputType="number"
+            android:layout_width="40dp"
+            android:id="@+id/txtCantidad"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center_horizontal" />
+        <Button
+            android:id="@+id/btnAddVotacion"
+            android:layout_width="40dp"
+            android:text="+"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+</LinearLayout>

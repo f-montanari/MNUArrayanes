@@ -1,0 +1,187 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+mnuarrayanes
+</name>
+</assembly>
+<members>
+<member name="T:mnuarrayanes.My.Resources.Resources">
+<summary>
+  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
+</summary>
+</member>
+<member name="P:mnuarrayanes.My.Resources.Resources.ResourceManager">
+<summary>
+  Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.
+</summary>
+</member>
+<member name="P:mnuarrayanes.My.Resources.Resources.Culture">
+<summary>
+  Reemplaza la propiedad CurrentUICulture del subproceso actual para todas las
+  búsquedas de recursos mediante esta clase de recurso fuertemente tipado.
+</summary>
+</member>
+<member name="P:mnuarrayanes.My.Resources.Resources.A_Favor">
+<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:mnuarrayanes.My.Resources.Resources.Cancel">
+<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:mnuarrayanes.My.Resources.Resources.ELA_logo">
+<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:mnuarrayanes.My.Resources.Resources.En_Contra">
+<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:mnuarrayanes.My.Resources.Resources.Logo">
+<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Icon similar a (Icono).
+</summary>
+</member>
+<member name="P:mnuarrayanes.My.Resources.Resources.OK">
+<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:mnuarrayanes.My.Resources.Resources.ONU_Logo">
+<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:mnuarrayanes.My.Resources.Resources.Presentes">
+<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:mnuarrayanes.My.Resources.Resources.Presentes_txt">
+<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:mnuarrayanes.My.Resources.Resources.Resultado">
+<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="T:mnuarrayanes.frmPrincipal.DeviceState">
+ <summary>
+ Enum for the different states of the device.
+   * CONNECTED = The device hasn't sent it's info yet. We don't know who it is.
+   * PAIRED = The device has identified itself. In this state it can send info or request it.
+   * DISCONNECTED = Not being used yet. Should be implemented in a way that the system keeps record of 
+ who connected, remember it, and wait for it's return.
+   * SEND_DATA = The device is sending current voting data. After data is sent, 
+ we pair it and the device is switched again to <see cref="F:mnuarrayanes.frmPrincipal.DeviceState.PAIRED"/>
+   * GET_INFO = The device wants new voting info. Important data should be sent in this state so the 
+ device knows what to expect. Up to now, only sends confirmation to the device.
+ </summary>
+</member>
+<member name="T:mnuarrayanes.frmPrincipal.incomingClient">
+ <summary>
+ Structure that holds important client data, such as IP Address, Pairing State, and others.
+ </summary>
+</member>
+<member name="F:mnuarrayanes.frmPrincipal.CloseAction">
+ <summary>
+ This gets called when Server.Close() is called.
+ It's done that way in order to prevent the app from exiting before actually closing
+ all connections.
+ </summary>
+</member>
+<member name="M:mnuarrayanes.frmPrincipal.Log(System.String)">
+ <summary>
+ Use for displaying errors in the console AND to write it in the log file.
+ </summary>
+ <param name="message">The message to be written into the log file.</param>
+</member>
+<member name="M:mnuarrayanes.frmPrincipal.KickClient(mnuarrayanes.frmPrincipal.incomingClient)">
+ <summary>
+ Disconnects a client from the platform, and adjusts data taking this into account.
+ </summary>
+ <param name="infoCliente">The client to be disconnected.</param>
+</member>
+<member name="M:mnuarrayanes.frmPrincipal.DisconnectClient(mnuarrayanes.frmPrincipal.incomingClient)">
+ <summary>
+ Disconnect a client that didn't pass the connection pairing.
+ </summary>
+ <param name="infoCliente">The client to disconnect.</param>
+</member>
+<member name="M:mnuarrayanes.frmPrincipal.ResetVotationData">
+ <summary>
+ Resets all data that involves the voting, such as the results and the devices that
+ sent their data.
+ </summary>
+</member>
+<member name="M:mnuarrayanes.frmPrincipal.ShowVotaciones">
+ <summary>
+ Show voting results into screen. Use only when data has finished arriving.
+ </summary>
+</member>
+<member name="M:mnuarrayanes.frmPrincipal.SetDeviceState(mnuarrayanes.frmPrincipal.incomingClient@,mnuarrayanes.frmPrincipal.DeviceState)">
+ <summary>
+ Set client's pairing state to desired state. 
+ Also refreshes the device list with the new data.
+ </summary>
+ <param name="clientInfo">The client whose state is going to be changed.</param>
+ <param name="state">The desired state.</param>
+</member>
+<member name="M:mnuarrayanes.frmPrincipal.PairVotaciones(mnuarrayanes.frmPrincipal.incomingClient@,System.String)">
+ <summary>
+ Pairs incoming voting data and adds it to the current voting state.
+ If the voting data isn't valid, it won't be taken into account.
+ </summary>
+ <param name="clientInfo">The client that sent the voting data.</param>
+ <param name="data">The data to be paired.</param>
+</member>
+<member name="M:mnuarrayanes.frmPrincipal.PairClientData(System.String,mnuarrayanes.frmPrincipal.incomingClient@)">
+ <summary>
+ Pairs incoming client data.
+ If data is valid, it updates voting data, set's client's state to paired, and lets the client know that it's successfully
+ paired.
+ </summary>
+ <param name="data">The data to be paired. 
+ Has to be in JSON format, in order to be serialized into a <see cref="T:mnuarrayanes.ConnectedDeviceInformation"/> via Newtonsoft
+ jsonConvert.</param>
+ <param name="infoCliente">Client who sent the data.</param>
+</member>
+<member name="M:mnuarrayanes.frmPrincipal.srvInstance_NuevaConexion(System.Net.IPEndPoint)">
+ <summary>
+ New connection handler. Handle new connections here.
+ </summary>
+ <param name="IDTerminal">The <see cref="T:System.Net.IPEndPoint"/> of the client that connected.</param>
+</member>
+<member name="M:mnuarrayanes.frmPrincipal.srvInstance_DatosRecibidos(System.Net.IPEndPoint)">
+ <summary>
+ This event is triggered when data is received. Device data handling goes in here.
+ </summary>
+ <param name="IDTerminal">The <see cref="T:System.Net.IPEndPoint"/> of the device that sent the data.</param>
+</member>
+<member name="M:mnuarrayanes.frmPrincipal.srvInstance_ConexionTerminada(System.Net.IPEndPoint)">
+ <summary>
+ This event is triggered when a device disconnected. Handle anything related to disconnected clients here.
+ </summary>
+ <param name="IDTerminal">The <see cref="T:System.Net.IPEndPoint"/> of the device that disconnected.</param>
+</member>
+<member name="M:mnuarrayanes.frmSettings.RefreshConnectionsList">
+ <summary>
+ Refresh frmSettings connected clients list.
+ </summary>
+</member>
+<member name="M:mnuarrayanes.frmSettings.UpdateList(System.Int32,System.String)">
+ <summary>
+ Update an item in the list. 
+ </summary>
+ <param name="itemIndex">Index of the item to be modified.</param>
+ <param name="text">Text for the item that's being modified.</param>
+</member>
+</members>
+</doc>

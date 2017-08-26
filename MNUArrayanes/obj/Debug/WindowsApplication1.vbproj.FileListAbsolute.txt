@@ -1,0 +1,49 @@
+E:\Proyectos C#\WindowsApplication1\WindowsApplication1\bin\Debug\WindowsApplication1.exe
+E:\Proyectos C#\WindowsApplication1\WindowsApplication1\bin\Debug\WindowsApplication1.pdb
+E:\Proyectos C#\WindowsApplication1\WindowsApplication1\bin\Debug\WindowsApplication1.xml
+E:\Proyectos C#\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.Form1.resources
+E:\Proyectos C#\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.Resources.resources
+E:\Proyectos C#\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.vbproj.GenerateResource.Cache
+E:\Proyectos C#\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.exe
+E:\Proyectos C#\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.xml
+E:\Proyectos C#\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.pdb
+C:\Users\Carlito\Desktop\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.exe
+C:\Users\Carlito\Desktop\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.xml
+C:\Users\Carlito\Desktop\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.pdb
+C:\Users\Carlito\Desktop\WindowsApplication1\WindowsApplication1\bin\Debug\WindowsApplication1.exe
+C:\Users\Carlito\Desktop\WindowsApplication1\WindowsApplication1\bin\Debug\WindowsApplication1.pdb
+C:\Users\Carlito\Desktop\WindowsApplication1\WindowsApplication1\bin\Debug\WindowsApplication1.xml
+C:\Users\Carlito\Desktop\WindowsApplication1\WindowsApplication1\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Carlito\Desktop\WindowsApplication1\WindowsApplication1\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Carlito\Desktop\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.vbprojResolveAssemblyReference.cache
+C:\Users\Carlito\Desktop\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.frmPrincipal.resources
+C:\Users\Carlito\Desktop\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.Resources.resources
+C:\Users\Carlito\Desktop\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.vbproj.GenerateResource.Cache
+C:\Users\Carlito\Desktop\ONU\WindowsApplication1\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Carlito\Desktop\ONU\WindowsApplication1\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Carlito\Desktop\ONU\WindowsApplication1\obj\Debug\WindowsApplication1.vbprojResolveAssemblyReference.cache
+C:\Users\Carlito\Desktop\ONU\WindowsApplication1\obj\Debug\WindowsApplication1.vbproj.GenerateResource.Cache
+C:\Users\Carlito\Desktop\ONU\WindowsApplication1\bin\Debug\mnuarrayanes.exe.config
+C:\Users\Carlito\Desktop\ONU\WindowsApplication1\bin\Debug\mnuarrayanes.exe
+C:\Users\Carlito\Desktop\ONU\WindowsApplication1\bin\Debug\mnuarrayanes.pdb
+C:\Users\Carlito\Desktop\ONU\WindowsApplication1\bin\Debug\mnuarrayanes.xml
+C:\Users\Carlito\Desktop\ONU\WindowsApplication1\obj\Debug\mnuarrayanes.frmPrincipal.resources
+C:\Users\Carlito\Desktop\ONU\WindowsApplication1\obj\Debug\mnuarrayanes.frmSettings.resources
+C:\Users\Carlito\Desktop\ONU\WindowsApplication1\obj\Debug\mnuarrayanes.Resources.resources
+C:\Users\Carlito\Desktop\ONU\WindowsApplication1\obj\Debug\mnuarrayanes.exe
+C:\Users\Carlito\Desktop\ONU\WindowsApplication1\obj\Debug\mnuarrayanes.xml
+C:\Users\Carlito\Desktop\ONU\WindowsApplication1\obj\Debug\mnuarrayanes.pdb
+E:\ONU\WindowsApplication1\bin\Debug\mnuarrayanes.exe.config
+E:\ONU\WindowsApplication1\bin\Debug\mnuarrayanes.exe
+E:\ONU\WindowsApplication1\bin\Debug\mnuarrayanes.pdb
+E:\ONU\WindowsApplication1\bin\Debug\mnuarrayanes.xml
+E:\ONU\WindowsApplication1\bin\Debug\Newtonsoft.Json.dll
+E:\ONU\WindowsApplication1\bin\Debug\Newtonsoft.Json.xml
+E:\ONU\WindowsApplication1\obj\Debug\WindowsApplication1.vbprojResolveAssemblyReference.cache
+E:\ONU\WindowsApplication1\obj\Debug\mnuarrayanes.frmPrincipal.resources
+E:\ONU\WindowsApplication1\obj\Debug\mnuarrayanes.frmSettings.resources
+E:\ONU\WindowsApplication1\obj\Debug\mnuarrayanes.Resources.resources
+E:\ONU\WindowsApplication1\obj\Debug\WindowsApplication1.vbproj.GenerateResource.Cache
+E:\ONU\WindowsApplication1\obj\Debug\mnuarrayanes.exe
+E:\ONU\WindowsApplication1\obj\Debug\mnuarrayanes.xml
+E:\ONU\WindowsApplication1\obj\Debug\mnuarrayanes.pdb
