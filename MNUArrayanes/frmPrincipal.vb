@@ -148,7 +148,6 @@ Public Class frmPrincipal
         Dim client = clientInfo
         Invoke(Sub()
                    frmSettings.UpdateList(client.listIndex, client.DeviceInfo.DeviceID & " - " & client.devState.ToString())
-                   Log("This action got called from frmSettings")
                End Sub)
     End Sub
 
@@ -236,7 +235,7 @@ Public Class frmPrincipal
             Log("[JSON ERROR] " & jsonEx.Message)
             DisconnectClient(infoCliente)
         Catch ex As Exception
-            Log("[ERROR] " & ex.Message)
+            Log("[ERROR] Error paireando la info: " & ex.Message)
         End Try
     End Sub
 #End Region
@@ -257,6 +256,11 @@ Public Class frmPrincipal
         info.ClientVersion = "?"
 
         ' TODO: Is this client already in our list? Check for repeating clients / duplicates.
+        If listaClientes.ContainsKey(IDTerminal) Then
+            ' This guy is already connected, don't do nothing. 
+            Return
+        End If
+
 
         cliente.DeviceInfo = info
         cliente.IP = IDTerminal
@@ -285,6 +289,13 @@ Public Class frmPrincipal
             Return
         End If
 
+        'Is it pinging?
+        If data = "ping" Then
+            srvInstance.EnviarRespuesta(IDTerminal, "pong")
+        End If
+        If data = "pong" Then
+            'We pinged. 
+        End If
         ' TODO: Remove debugging line
         Log("[Server] Info recibida de " & IDTerminal.ToString() & " (" & listaClientes(IDTerminal).devState & "): " & data & vbNewLine)
 
@@ -346,7 +357,7 @@ Public Class frmPrincipal
         Catch gex As KeyNotFoundException
             Log("[Error] Device not found.")
         Catch ex As Exception
-            Log("[Error] " & ex.Message)
+            Log("[Error] Error cerrando conexión: " & ex.Message)
         End Try
 
         ' Remove the device from our list.
@@ -394,7 +405,7 @@ Public Class frmPrincipal
             End If
         Catch fex As FormatException
             ' We got this error when trying to parse txtNumDelegaciones's Text. Altered data.
-            Log("[ERROR] " & fex.Message)
+            Log("[ERROR] Format exception:" & fex.Message)
             Return
         End Try
     End Sub
@@ -435,7 +446,7 @@ Public Class frmPrincipal
             Log("[Server] Ready")
         Catch ex As Exception
             MsgBox("Error iniciando servidor: " & ex.Message, vbOKOnly + vbCritical, "Error")
-            Log("[ERROR]" & ex.Message)
+            Log("[ERROR] Error iniciando servidor" & ex.Message)
             Application.Exit()
         End Try
     End Sub
@@ -465,6 +476,16 @@ Public Class frmPrincipal
         '    txtNumDelegaciones.Font = fntDelegaciones
         '    cmdNuevo.Text = "Nueva Enmienda"
         'End If
+    End Sub
+
+    Private Sub tmrPing_Tick(sender As Object, e As EventArgs) Handles tmrPing.Tick
+        For Each ip In listaClientes.Keys
+            Try
+                srvInstance.EnviarRespuesta(ip, "ping")
+            Catch ex As Net.Sockets.SocketException
+                MsgBox("Error")
+            End Try
+        Next
     End Sub
 #End Region
 

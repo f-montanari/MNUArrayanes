@@ -21,7 +21,7 @@ Public Class frmSettings
                     lstConnections.Items.Add(cliente.Value.DeviceInfo.DeviceID.ToString() & " " & cliente.Value.devState.ToString())
                     clientList2(cliente.Key) = info
                 Catch nex As NullReferenceException
-                    ' TODO: Throw an error? Used to happen when trying to update and got to the last item of
+                    ' TODO: Throw an error? Use to happen when trying to update and got to the last item of
                     ' the loop. Doesn't happen anymore, yet I kept this for convenience. 
                     Continue For
                 End Try

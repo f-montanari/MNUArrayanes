@@ -43,6 +43,12 @@ Public Class Servidor
 #End Region
 #Region "Methods"
     Public Sub EnviarRespuesta(ByVal IDCliente As Net.IPEndPoint, ByVal message As String)
+
+        ' Evitemos que se haya desconectado el cliente.
+        If Not Clientes.ContainsKey(IDCliente) Then
+
+            Return
+        End If
         Dim clnReceptor As InfoDeUnCliente = Clientes(IDCliente)
         Dim BufferDeEscritura() As Byte
         Dim diffStream As NetworkStream
@@ -132,6 +138,7 @@ Public Class Servidor
                     'Inicio el thread encargado de escuchar los mensajes del cliente
                     .thread.Start()
                 Catch ex As SocketException
+                    ' Deberíamos hacer algo si ocurre esto. No puedo esperar que el SocketException sea sólo porque se cierre una conexión.
                     Return
                 End Try
             End While
@@ -178,8 +185,8 @@ Public Class Servidor
                         RaiseEvent ConexionTerminada(IDReal)
                         Exit While
                     Catch scktEx As SocketException
-                        Debug.WriteLine("[ERROR] Socket exception: " & scktEx.Message & vbNewLine &
-                                        "Did you just close the app without closing all sockets?")
+                        Debug.WriteLine("[ERROR] Socket exception: " & scktEx.Message)
+                        RaiseEvent ConexionTerminada(IDReal)
                         Exit While
                     End Try
                 End If
