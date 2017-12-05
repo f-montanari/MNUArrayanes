@@ -12,3 +12,17 @@ E:\ONU\MNUArrayanes\obj\Debug\MNUArrayanes.vbproj.GenerateResource.Cache
 E:\ONU\MNUArrayanes\obj\Debug\mnuarrayanes.exe
 E:\ONU\MNUArrayanes\obj\Debug\mnuarrayanes.xml
 E:\ONU\MNUArrayanes\obj\Debug\mnuarrayanes.pdb
+E:\ONU Github\ONU\MNUArrayanes\bin\Debug\mnuarrayanes.exe.config
+E:\ONU Github\ONU\MNUArrayanes\bin\Debug\mnuarrayanes.exe
+E:\ONU Github\ONU\MNUArrayanes\bin\Debug\mnuarrayanes.pdb
+E:\ONU Github\ONU\MNUArrayanes\bin\Debug\mnuarrayanes.xml
+E:\ONU Github\ONU\MNUArrayanes\bin\Debug\Newtonsoft.Json.dll
+E:\ONU Github\ONU\MNUArrayanes\bin\Debug\Newtonsoft.Json.xml
+E:\ONU Github\ONU\MNUArrayanes\obj\Debug\MNUArrayanes.vbprojResolveAssemblyReference.cache
+E:\ONU Github\ONU\MNUArrayanes\obj\Debug\mnuarrayanes.frmPrincipal.resources
+E:\ONU Github\ONU\MNUArrayanes\obj\Debug\mnuarrayanes.frmSettings.resources
+E:\ONU Github\ONU\MNUArrayanes\obj\Debug\mnuarrayanes.Resources.resources
+E:\ONU Github\ONU\MNUArrayanes\obj\Debug\MNUArrayanes.vbproj.GenerateResource.Cache
+E:\ONU Github\ONU\MNUArrayanes\obj\Debug\mnuarrayanes.exe
+E:\ONU Github\ONU\MNUArrayanes\obj\Debug\mnuarrayanes.xml
+E:\ONU Github\ONU\MNUArrayanes\obj\Debug\mnuarrayanes.pdb

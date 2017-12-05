@@ -1,5 +1,6 @@
 package com.fmontanari.mnuapp;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,13 +24,14 @@ import com.fmontanari.mnuapp.data.Votacion;
 import com.fmontanari.mnuapp.first_run.FirstRunActivity;
 import com.fmontanari.mnuapp.interfaces.ClientEvents;
 import com.fmontanari.mnuapp.models.Client;
-
+import com.fmontanari.mnuapp.models.TaskFragment;
 
 /**
  * Created by Franco Montanari on 24/11/2016.
  */
 
-public class MainActivity extends AppCompatActivity implements ClientEvents{
+public class MainActivity extends AppCompatActivity implements ClientEvents, TaskFragment.TaskCallbacks
+{
 
     public enum State{
         DISCONNECTED,
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements ClientEvents{
     static final int SEND_DATA = 2;
     static final int FIRST_RUN = 3;
     static final int START_VOTES = 4;
+    private static final String TAG_TASK_FRAGMENT = "TASK_FRAGMENT";
+
 
     State serverState = State.DISCONNECTED;
     Client myClient;
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements ClientEvents{
     Votacion currVotacion;
     Context myContext;
     boolean isConnected = false;
+    TaskFragment mTaskFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,9 +151,15 @@ public class MainActivity extends AppCompatActivity implements ClientEvents{
         if( !isConnected )
         {
             Log.i("Client","Starting connection");
-            myClient = new Client(srvIP,port,this);
-            myClient.addEventListener(this);
-            myClient.execute();
+            FragmentManager fm = getFragmentManager();
+            mTaskFragment = (TaskFragment) fm.findFragmentByTag(TAG_TASK_FRAGMENT);
+
+            // If the Fragment is non-null, then it is currently being
+            // retained across a configuration change.
+            if (mTaskFragment == null) {
+                mTaskFragment = new TaskFragment();
+                fm.beginTransaction().add(mTaskFragment, TAG_TASK_FRAGMENT).commit();
+            }
             isConnected = true;
         }
     }
@@ -239,11 +250,20 @@ public class MainActivity extends AppCompatActivity implements ClientEvents{
         }
     }
 
+    @Override
+    public void onClientCreated(Client c)
+    {
+        myClient = c;
+    }
+
     public void sendAccessData()
     {
         String jsonString = myInfo.toJSON();
         String newString = jsonString.replace("\\","");
-        myClient.SendMessage(newString);
+        if(newString == null)
+            Log.e("Client","Null string");
+        else
+            myClient.SendMessage(newString);
     }
 
     // Client Interface implementation.
@@ -268,11 +288,6 @@ public class MainActivity extends AppCompatActivity implements ClientEvents{
         processCommands(data);
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        //setContentView(R.layout.activity_my);
-    }
 
     private void processCommands(String commands)
     {
@@ -374,5 +389,8 @@ public class MainActivity extends AppCompatActivity implements ClientEvents{
             });
         }
     }
+
+
+
 
 }

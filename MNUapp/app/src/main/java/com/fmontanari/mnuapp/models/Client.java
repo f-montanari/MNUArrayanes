@@ -24,7 +24,7 @@ import com.fmontanari.mnuapp.interfaces.ClientEvents;
  * Created by Franco Montanari on 24/11/2016.
  */
 
-public class Client extends AsyncTask<Void,Void,Void> {
+public class Client extends AsyncTask<Void,Integer,Void> {
 
 
     private List<ClientEvents> eventListeners = new ArrayList<>();
@@ -34,18 +34,20 @@ public class Client extends AsyncTask<Void,Void,Void> {
     private ByteArrayOutputStream byteArrayOutputStream = null;
     private OutputStream outputStream = null;
     private Socket socket = null;
-    private MainActivity callbackActivity;
 
-    public Client(String addr, int port, MainActivity callback) {
+    private TaskFragment.TaskCallbacks mCallbacks;
+
+    public Client(String addr, int port, TaskFragment.TaskCallbacks mCallbacks) {
         dstAddress = addr;
         dstPort = port;
-        callbackActivity = callback;
+        this.mCallbacks = mCallbacks;
     }
 
     public void addEventListener(ClientEvents event)
     {
         eventListeners.add(event);
     }
+
 
     @Override
     protected Void doInBackground(Void... arg0) {
@@ -66,6 +68,7 @@ public class Client extends AsyncTask<Void,Void,Void> {
             {
                 in.onConnected();
             }
+            mCallbacks.onConnected();
 
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 // Hardcoded Buffer... Should optimize this some way.
@@ -78,6 +81,7 @@ public class Client extends AsyncTask<Void,Void,Void> {
                 for (ClientEvents in : eventListeners) {
                     in.onIncomingData(incomingData);
                 }
+                mCallbacks.onIncomingData(incomingData);
                 incomingData = "";
             }
 
@@ -114,6 +118,7 @@ public class Client extends AsyncTask<Void,Void,Void> {
                     {
                         in.onDisconnected();
                     }
+                    mCallbacks.onDisconnected();
                 } catch (IOException e) {
 
                     e.printStackTrace();
@@ -124,11 +129,7 @@ public class Client extends AsyncTask<Void,Void,Void> {
         return null;
     }
 
-    @Override
-    protected void onProgressUpdate(Void... values) {
-        super.onProgressUpdate(values);
-        Log.i("Client", response);
-    }
+
 
     public String SendMessage(String message)
     {
@@ -158,8 +159,6 @@ public class Client extends AsyncTask<Void,Void,Void> {
         return response;
     }
 
-
-
     public Void Disconnect()
     {
         try
@@ -172,6 +171,7 @@ public class Client extends AsyncTask<Void,Void,Void> {
             {
                 in.onDisconnected();
             }
+            mCallbacks.onDisconnected();
         }catch (IOException e)
         {
             Log.e("Client","Socket disconnected");
@@ -179,15 +179,11 @@ public class Client extends AsyncTask<Void,Void,Void> {
             {
                 in.onDisconnected();
             }
+            mCallbacks.onDisconnected();
         }
         return null;
     }
 
     private void LogActivity(String message) { Log.i("Client", "Received message: " + message); }
-    @Override
-    protected void onPostExecute(Void result) {
-        LogActivity(response);
-        super.onPostExecute(result);
-    }
 
 }

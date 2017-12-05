@@ -72,6 +72,12 @@ mnuarrayanes
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="T:mnuarrayanes.ConnectedDeviceInformation">
+ <summary>
+ Holds the info of any Device that connected to the server. If the device is paired correctly, this info
+ is filled.
+ </summary>
+</member>
 <member name="T:mnuarrayanes.frmPrincipal.DeviceState">
  <summary>
  Enum for the different states of the device.
@@ -182,6 +188,18 @@ mnuarrayanes
  </summary>
  <param name="itemIndex">Index of the item to be modified.</param>
  <param name="text">Text for the item that's being modified.</param>
+</member>
+<member name="T:mnuarrayanes.Servidor">
+ <summary>
+ Server related class.
+ 
+ Credits to: http://www.elguille.info/colabora/puntoNET/PabloTilli_SocketsVBNET.htm
+ </summary>
+</member>
+<member name="T:mnuarrayanes.Votacion">
+ <summary>
+ Votation data sent from the device.
+ </summary>
 </member>
 </members>
 </doc>

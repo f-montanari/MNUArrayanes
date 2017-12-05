@@ -477,16 +477,6 @@ Public Class frmPrincipal
         '    cmdNuevo.Text = "Nueva Enmienda"
         'End If
     End Sub
-
-    Private Sub tmrPing_Tick(sender As Object, e As EventArgs) Handles tmrPing.Tick
-        For Each ip In listaClientes.Keys
-            Try
-                srvInstance.EnviarRespuesta(ip, "ping")
-            Catch ex As Net.Sockets.SocketException
-                MsgBox("Error")
-            End Try
-        Next
-    End Sub
 #End Region
 
 End Class
