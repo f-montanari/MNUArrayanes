@@ -1,6 +1,5 @@
 package com.fmontanari.mnuapp.data;
 
-import android.bluetooth.BluetoothClass;
 import android.util.JsonReader;
 
 import org.json.JSONException;
