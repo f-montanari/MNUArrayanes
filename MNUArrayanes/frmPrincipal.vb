@@ -430,8 +430,9 @@ Public Class frmPrincipal
 
     Private Sub frmPrincipal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        cntAFavor.ControlColor = Color.Green
+        cntAFavor.ControlColor = Color.Lime
         cntEnContra.ControlColor = Color.Red
+
 
         If My.Settings.LogFile Then
             If Not File.Exists(Application.StartupPath & "/server.log") Then

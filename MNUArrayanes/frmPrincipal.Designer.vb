@@ -32,15 +32,15 @@ Partial Class frmPrincipal
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.cntAFavor = New mnuarrayanes.Contador()
         Me.txtNumAprobados = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.cntEnContra = New mnuarrayanes.Contador()
         Me.txtNumDesaprobados = New System.Windows.Forms.Label()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.txtNumDelegaciones = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.cntAFavor = New mnuarrayanes.Contador()
-        Me.cntEnContra = New mnuarrayanes.Contador()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -126,6 +126,13 @@ Partial Class frmPrincipal
         Me.Panel1.Controls.Add(Me.txtNumAprobados)
         Me.Panel1.Name = "Panel1"
         '
+        'cntAFavor
+        '
+        resources.ApplyResources(Me.cntAFavor, "cntAFavor")
+        Me.cntAFavor.ControlColor = System.Drawing.Color.Red
+        Me.cntAFavor.CounterBackColor = System.Drawing.Color.Gray
+        Me.cntAFavor.Name = "cntAFavor"
+        '
         'txtNumAprobados
         '
         resources.ApplyResources(Me.txtNumAprobados, "txtNumAprobados")
@@ -139,6 +146,13 @@ Partial Class frmPrincipal
         Me.Panel2.Controls.Add(Me.cntEnContra)
         Me.Panel2.Controls.Add(Me.txtNumDesaprobados)
         Me.Panel2.Name = "Panel2"
+        '
+        'cntEnContra
+        '
+        resources.ApplyResources(Me.cntEnContra, "cntEnContra")
+        Me.cntEnContra.ControlColor = System.Drawing.Color.Red
+        Me.cntEnContra.CounterBackColor = System.Drawing.Color.Gray
+        Me.cntEnContra.Name = "cntEnContra"
         '
         'txtNumDesaprobados
         '
@@ -174,16 +188,6 @@ Partial Class frmPrincipal
         Me.TableLayoutPanel2.Controls.Add(Me.cmdNuevo, 0, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.cmdOpciones, 1, 0)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        '
-        'cntAFavor
-        '
-        resources.ApplyResources(Me.cntAFavor, "cntAFavor")
-        Me.cntAFavor.Name = "cntAFavor"
-        '
-        'cntEnContra
-        '
-        resources.ApplyResources(Me.cntEnContra, "cntEnContra")
-        Me.cntEnContra.Name = "cntEnContra"
         '
         'frmPrincipal
         '

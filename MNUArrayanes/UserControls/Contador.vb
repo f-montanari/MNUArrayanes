@@ -7,6 +7,7 @@ Public Class Contador
     Public MaxValue As Integer = 100
     Private bgColor As Color = Color.Gray
     Private frontColor As Color = Color.Red
+    Private bufferedGraphics As BufferedGraphics
 
     Private timeElapsed As Single = 0
     Private totalTime As Single = 100
@@ -31,19 +32,10 @@ Public Class Contador
         End Set
     End Property
 
-    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
-        e.Graphics.Clear(Color.White)
-        e.Graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
 
-        Dim rect As Rectangle = New Rectangle(10, 10,
-        Me.ClientSize.Width - 20,
-        Me.ClientSize.Height - 20)
 
-        Dim thin_pen As Pen = New Pen(CounterBackColor, 10)
-        e.Graphics.DrawArc(thin_pen, rect, -180, 360)
-        Dim thick_pen As Pen = New Pen(ControlColor, 10)
-        Dim counterAngle As Single = 360 * Value / MaxValue
-        e.Graphics.DrawArc(thick_pen, rect, -180, counterAngle * timeElapsed / totalTime)
+    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles MyBase.Paint
+        PaintMe()
     End Sub
 
     Public Sub SetCounter(ByVal value As Integer)
@@ -58,7 +50,47 @@ Public Class Contador
             timeElapsed = 0
             tmrAnimation.Enabled = False
         Else
-            Refresh()
+            PaintMe()
         End If
     End Sub
+
+    Private Sub Contador_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        CenterLabel()
+
+        Me.DoubleBuffered = True
+        Dim context As BufferedGraphicsContext = BufferedGraphicsManager.Current
+        context.MaximumBuffer = New Size(Me.Width + 1, Me.Height + 1)
+        bufferedGraphics = context.Allocate(Me.CreateGraphics(), New Rectangle(0, 0, Me.Width, Me.Height))
+
+        PaintMe()
+    End Sub
+
+    Private Sub lblValue_Resize(sender As Object, e As EventArgs)
+        CenterLabel()
+    End Sub
+
+    Private Sub CenterLabel()
+        Dim x As Integer = (Me.Width / 2) - (lblValue.Width / 2)
+        Dim y As Integer = (Me.Height / 2) - (lblValue.Height / 2)
+
+        lblValue.Location = New Point(x, y)
+    End Sub
+
+    Private Sub PaintMe()
+        Dim g As Graphics = bufferedGraphics.Graphics
+        g.Clear(Color.White)
+        Dim rect As Rectangle = New Rectangle(10, 10,
+        ClientSize.Width - 20,
+        ClientSize.Height - 20)
+
+        Dim thin_pen As Pen = New Pen(CounterBackColor, 10)
+        g.DrawArc(thin_pen, rect, -180, 360)
+
+        Dim thick_pen As Pen = New Pen(ControlColor, 10)
+        Dim counterAngle As Single = 360 * Value / MaxValue
+        g.DrawArc(thick_pen, rect, -180, counterAngle * timeElapsed / totalTime)
+
+        bufferedGraphics.Render(Graphics.FromHwnd(Me.Handle))
+    End Sub
+
 End Class
