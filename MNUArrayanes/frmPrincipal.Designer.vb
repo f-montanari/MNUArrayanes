@@ -39,6 +39,8 @@ Partial Class frmPrincipal
         Me.txtNumDelegaciones = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.cntAFavor = New mnuarrayanes.Contador()
+        Me.cntEnContra = New mnuarrayanes.Contador()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -119,8 +121,8 @@ Partial Class frmPrincipal
         '
         'Panel1
         '
-        Me.Panel1.BackgroundImage = Global.mnuarrayanes.My.Resources.Resources.OK
         resources.ApplyResources(Me.Panel1, "Panel1")
+        Me.Panel1.Controls.Add(Me.cntAFavor)
         Me.Panel1.Controls.Add(Me.txtNumAprobados)
         Me.Panel1.Name = "Panel1"
         '
@@ -133,8 +135,8 @@ Partial Class frmPrincipal
         '
         'Panel2
         '
-        Me.Panel2.BackgroundImage = Global.mnuarrayanes.My.Resources.Resources.Cancel
         resources.ApplyResources(Me.Panel2, "Panel2")
+        Me.Panel2.Controls.Add(Me.cntEnContra)
         Me.Panel2.Controls.Add(Me.txtNumDesaprobados)
         Me.Panel2.Name = "Panel2"
         '
@@ -173,6 +175,16 @@ Partial Class frmPrincipal
         Me.TableLayoutPanel2.Controls.Add(Me.cmdOpciones, 1, 0)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         '
+        'cntAFavor
+        '
+        resources.ApplyResources(Me.cntAFavor, "cntAFavor")
+        Me.cntAFavor.Name = "cntAFavor"
+        '
+        'cntEnContra
+        '
+        resources.ApplyResources(Me.cntEnContra, "cntEnContra")
+        Me.cntEnContra.Name = "cntEnContra"
+        '
         'frmPrincipal
         '
         resources.ApplyResources(Me, "$this")
@@ -210,4 +222,6 @@ Partial Class frmPrincipal
     Friend WithEvents Panel2 As Panel
     Friend WithEvents txtNumAprobados As Label
     Friend WithEvents txtNumDesaprobados As Label
+    Friend WithEvents cntAFavor As Contador
+    Friend WithEvents cntEnContra As Contador
 End Class

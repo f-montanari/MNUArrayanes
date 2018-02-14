@@ -158,6 +158,8 @@ public class MainActivity extends AppCompatActivity implements ClientEvents, Tas
             // retained across a configuration change.
             if (mTaskFragment == null) {
                 mTaskFragment = new TaskFragment();
+                mTaskFragment.IP = srvIP;
+                mTaskFragment.port = port;
                 fm.beginTransaction().add(mTaskFragment, TAG_TASK_FRAGMENT).commit();
             }
             isConnected = true;

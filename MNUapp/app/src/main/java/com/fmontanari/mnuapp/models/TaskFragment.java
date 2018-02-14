@@ -9,6 +9,11 @@ import android.os.Bundle;
  */
 public class TaskFragment extends Fragment {
 
+    public String IP;
+    public int port;
+
+
+
     /**
      * Callback interface through which the fragment will report the
      * task's progress and results back to the Activity.
@@ -47,7 +52,7 @@ public class TaskFragment extends Fragment {
         setRetainInstance(true);
 
         // Create and execute the background task.
-        mTask = new Client("192.168.0.30",1855,mCallbacks);
+        mTask = new Client(IP,port,mCallbacks);
         mTask.execute();
         mCallbacks.onClientCreated(mTask);
     }

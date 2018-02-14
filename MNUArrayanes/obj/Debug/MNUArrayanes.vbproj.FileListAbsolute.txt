@@ -26,3 +26,4 @@ E:\ONU Github\ONU\MNUArrayanes\obj\Debug\MNUArrayanes.vbproj.GenerateResource.Ca
 E:\ONU Github\ONU\MNUArrayanes\obj\Debug\mnuarrayanes.exe
 E:\ONU Github\ONU\MNUArrayanes\obj\Debug\mnuarrayanes.xml
 E:\ONU Github\ONU\MNUArrayanes\obj\Debug\mnuarrayanes.pdb
+E:\ONU Github\ONU\MNUArrayanes\obj\Debug\mnuarrayanes.Contador.resources

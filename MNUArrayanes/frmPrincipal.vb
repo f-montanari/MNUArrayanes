@@ -104,6 +104,9 @@ Public Class frmPrincipal
     Private Sub DisconnectClient(ByVal infoCliente As incomingClient)
         srvInstance.EnviarRespuesta(infoCliente.IP, "Error parsing data, invalid connection")
         intCantVotantes -= infoCliente.DeviceInfo.maxVotes
+        cntAFavor.MaxValue = intCantVotantes
+        cntEnContra.MaxValue = intCantVotantes
+
         listaClientes.Remove(infoCliente.IP)
         srvInstance.DesconectarCliente(infoCliente.IP)
     End Sub
@@ -117,6 +120,9 @@ Public Class frmPrincipal
         intVotados = 0
         intAprobados = 0
         intDesaprobados = 0
+
+        cntAFavor.SetCounter(intAprobados)
+        cntEnContra.SetCounter(intDesaprobados)
     End Sub
 
     ''' <summary>
@@ -124,8 +130,12 @@ Public Class frmPrincipal
     ''' </summary>
     Private Sub ShowVotaciones()
         lblStatus.Text = "Listo."
-        txtNumAprobados.Text = intAprobados.ToString()
-        txtNumDesaprobados.Text = intDesaprobados.ToString()
+
+        'txtNumAprobados.Text = intAprobados.ToString()
+        'txtNumDesaprobados.Text = intDesaprobados.ToString()
+
+        cntAFavor.SetCounter(intAprobados)
+        cntEnContra.SetCounter(intDesaprobados)
 
         If intAprobados > intDesaprobados Then
             txtResultado.Text = "APROBADA"
@@ -216,6 +226,8 @@ Public Class frmPrincipal
 
             Invoke(Sub()
                        txtNumDelegaciones.Text = intCantVotantes.ToString()
+                       cntAFavor.MaxValue = intCantVotantes
+                       cntEnContra.MaxValue = intCantVotantes
                    End Sub)
 
             ' Update client info with paired data.
@@ -340,6 +352,8 @@ Public Class frmPrincipal
             intCantVotantes -= listaClientes(IDTerminal).DeviceInfo.maxVotes
             Invoke(Sub()
                        txtNumDelegaciones.Text = intCantVotantes.ToString()
+                       cntAFavor.MaxValue = intCantVotantes
+                       cntEnContra.MaxValue = intCantVotantes
                    End Sub)
             If isVoting Then
                 ' Tell anyone that there's been a disconnection.
@@ -378,7 +392,7 @@ Public Class frmPrincipal
 
     Private Sub cmdNuevo_Click(sender As Object, e As EventArgs) Handles cmdNuevo.Click
 
-        ' Init votation. 
+        ' Init votation.
         Try
             ' Anyone connected?
             If listaClientes.Count = 0 Then
@@ -415,24 +429,17 @@ Public Class frmPrincipal
     End Sub
 
     Private Sub frmPrincipal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        cntAFavor.ControlColor = Color.Green
+        cntEnContra.ControlColor = Color.Red
+
         If My.Settings.LogFile Then
             If Not File.Exists(Application.StartupPath & "/server.log") Then
                 File.Create(Application.StartupPath & "/server.log").Close()
             End If
         End If
 
-        'FIXME: Diseño responsive? Esto está mal.
-
-        'fntDelegaciones = txtNumDelegaciones.Font
-        'fntVotantes = txtNumDesaprobados.Font
-        'fntResultados = txtResultado.Font
-
-        'Dim r As New Font(fntResultados.FontFamily, fntResultados.Size * 0.75)
-        'Dim v As New Font(fntVotantes.FontFamily, fntVotantes.Size * 0.25)
-        'txtNumDelegaciones.Font = v
-
-        ' Init frmSettings. Shouldn't do this.
-        ' TODO: Make a static class for frmSettings to handle the data correctly.
+        ' TODO: Make a (static?) class for frmSettings to handle the data correctly.
         frmSettings.Show()
         frmSettings.Hide()
 
@@ -458,25 +465,9 @@ Public Class frmPrincipal
 
     Private Sub frmPrincipal_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
 
-        'TODO: Arreglar responsive
-        'If Me.Size.Width < 1024 Then
-        '    Dim d As New Font(fntDelegaciones.FontFamily, fntDelegaciones.Size * 1.5)
-        '    Dim v As New Font(fntVotantes.FontFamily, fntVotantes.Size * 0.25)
-        '    Dim r As New Font(fntResultados.FontFamily, fntResultados.Size * 0.75)
-
-        '    'txtNumAprobados.Font = d
-        '    'txtNumDesaprobados.Font = d
-        '    txtNumDelegaciones.Font = v
-        '    txtResultado.Font = r
-
-        '    cmdNuevo.Text = "N. Enmienda"
-        'Else
-        '    txtNumAprobados.Font = fntVotantes
-        '    txtNumDesaprobados.Font = fntVotantes
-        '    txtNumDelegaciones.Font = fntDelegaciones
-        '    cmdNuevo.Text = "Nueva Enmienda"
-        'End If
+        'TODO: Responsive design
     End Sub
+
 #End Region
 
 End Class
