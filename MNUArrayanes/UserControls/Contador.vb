@@ -77,20 +77,26 @@ Public Class Contador
     End Sub
 
     Private Sub PaintMe()
-        Dim g As Graphics = bufferedGraphics.Graphics
-        g.Clear(Color.White)
-        Dim rect As Rectangle = New Rectangle(10, 10,
-        ClientSize.Width - 20,
-        ClientSize.Height - 20)
+        If Not IsNothing(Graphics.FromHwnd(Me.Handle)) Then
+            Dim g As Graphics = bufferedGraphics.Graphics
+            g.Clear(Color.White)
+            Dim rect As Rectangle = New Rectangle(10, 10,
+            ClientSize.Width - 20,
+            ClientSize.Height - 20)
 
-        Dim thin_pen As Pen = New Pen(CounterBackColor, 10)
-        g.DrawArc(thin_pen, rect, -180, 360)
+            Dim thin_pen As Pen = New Pen(CounterBackColor, 10)
+            g.DrawArc(thin_pen, rect, -180, 360)
 
-        Dim thick_pen As Pen = New Pen(ControlColor, 10)
-        Dim counterAngle As Single = 360 * Value / MaxValue
-        g.DrawArc(thick_pen, rect, -180, counterAngle * timeElapsed / totalTime)
+            Dim thick_pen As Pen = New Pen(ControlColor, 10)
+            Dim counterAngle As Single = 360 * Value / MaxValue
+            g.DrawArc(thick_pen, rect, -180, counterAngle * timeElapsed / totalTime)
 
-        bufferedGraphics.Render(Graphics.FromHwnd(Me.Handle))
+            bufferedGraphics.Render(Graphics.FromHwnd(Me.Handle))
+        End If
     End Sub
 
+    Private Sub Contador_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        CenterLabel()
+        PaintMe()
+    End Sub
 End Class

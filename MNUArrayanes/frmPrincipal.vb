@@ -123,6 +123,7 @@ Public Class frmPrincipal
 
         cntAFavor.SetCounter(intAprobados)
         cntEnContra.SetCounter(intDesaprobados)
+        txtResultado.Text = ""
     End Sub
 
     ''' <summary>

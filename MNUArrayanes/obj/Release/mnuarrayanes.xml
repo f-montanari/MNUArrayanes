@@ -72,6 +72,25 @@ mnuarrayanes
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="T:mnuarrayanes.ConnectedDeviceInformation">
+ <summary>
+ Holds the info of any Device that connected to the server. If the device is paired correctly, this info
+ is filled.
+ </summary>
+</member>
+<member name="T:mnuarrayanes.frmPrincipal.DeviceState">
+ <summary>
+ Enum for the different states of the device.
+   * CONNECTED = The device hasn't sent it's info yet. We don't know who it is.
+   * PAIRED = The device has identified itself. In this state it can send info or request it.
+   * DISCONNECTED = Not being used yet. Should be implemented in a way that the system keeps record of 
+ who connected, remember it, and wait for it's return.
+   * SEND_DATA = The device is sending current voting data. After data is sent, 
+ we pair it and the device is switched again to <see cref="F:mnuarrayanes.frmPrincipal.DeviceState.PAIRED"/>
+   * GET_INFO = The device wants new voting info. Important data should be sent in this state so the 
+ device knows what to expect. Up to now, only sends confirmation to the device.
+ </summary>
+</member>
 <member name="T:mnuarrayanes.frmPrincipal.incomingClient">
  <summary>
  Structure that holds important client data, such as IP Address, Pairing State, and others.
@@ -139,6 +158,48 @@ mnuarrayanes
  Has to be in JSON format, in order to be serialized into a <see cref="T:mnuarrayanes.ConnectedDeviceInformation"/> via Newtonsoft
  jsonConvert.</param>
  <param name="infoCliente">Client who sent the data.</param>
+</member>
+<member name="M:mnuarrayanes.frmPrincipal.srvInstance_NuevaConexion(System.Net.IPEndPoint)">
+ <summary>
+ New connection handler. Handle new connections here.
+ </summary>
+ <param name="IDTerminal">The <see cref="T:System.Net.IPEndPoint"/> of the client that connected.</param>
+</member>
+<member name="M:mnuarrayanes.frmPrincipal.srvInstance_DatosRecibidos(System.Net.IPEndPoint)">
+ <summary>
+ This event is triggered when data is received. Device data handling goes in here.
+ </summary>
+ <param name="IDTerminal">The <see cref="T:System.Net.IPEndPoint"/> of the device that sent the data.</param>
+</member>
+<member name="M:mnuarrayanes.frmPrincipal.srvInstance_ConexionTerminada(System.Net.IPEndPoint)">
+ <summary>
+ This event is triggered when a device disconnected. Handle anything related to disconnected clients here.
+ </summary>
+ <param name="IDTerminal">The <see cref="T:System.Net.IPEndPoint"/> of the device that disconnected.</param>
+</member>
+<member name="M:mnuarrayanes.frmSettings.RefreshConnectionsList">
+ <summary>
+ Refresh frmSettings connected clients list.
+ </summary>
+</member>
+<member name="M:mnuarrayanes.frmSettings.UpdateList(System.Int32,System.String)">
+ <summary>
+ Update an item in the list. 
+ </summary>
+ <param name="itemIndex">Index of the item to be modified.</param>
+ <param name="text">Text for the item that's being modified.</param>
+</member>
+<member name="T:mnuarrayanes.Servidor">
+ <summary>
+ Server related class.
+ 
+ Credits to: http://www.elguille.info/colabora/puntoNET/PabloTilli_SocketsVBNET.htm
+ </summary>
+</member>
+<member name="T:mnuarrayanes.Votacion">
+ <summary>
+ Votation data sent from the device.
+ </summary>
 </member>
 </members>
 </doc>
