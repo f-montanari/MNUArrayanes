@@ -1,17 +1,20 @@
 package com.fmontanari.mnuapp.data;
 
-import android.os.Parcel;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Currency;
-
+/**
+ * Class that holds the current voting data.
+ */
 public class Votacion {
     public int AFavor;
     public int EnContra;
     public int Abstenciones;
 
+    /**
+     * Converts this Votacion to a JSON formatted string.
+     * @return A JSON object that holds the data of this Votacion.
+     */
     public JSONObject toJSON()
     {
         JSONObject obj = new JSONObject();
@@ -26,6 +29,11 @@ public class Votacion {
         return obj;
     }
 
+    /**
+     * Return a Votacion from it's associated JSON string.
+     * @param jsonString The JSON formatted string that holds the data for this Votacion.
+     * @return The Votacion associated with the given JSON string.
+     */
     public static Votacion fromJSON(String jsonString)
     {
         try {
@@ -37,6 +45,11 @@ public class Votacion {
         }
     }
 
+    /**
+     * Return a Votacion from it's associated JSON string.
+     * @param jsonObject The JSON object that holds the data for this Votacion.
+     * @return The Votacion associated with the given JSON object.
+     */
     public static Votacion fromJSON(JSONObject jsonObject)
     {
         Votacion v = new Votacion();

@@ -1,33 +1,26 @@
 package com.fmontanari.mnuapp.models;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.TextView;
-
-import com.fmontanari.mnuapp.MainActivity;
 import com.fmontanari.mnuapp.interfaces.ClientEvents;
 
 /**
  * Created by Franco Montanari on 24/11/2016.
+ * This class is meant to handle the connection to the server.
+ * Most of the networking code is handled here.
  */
 
 public class Client extends AsyncTask<Void,Integer,Void> {
 
-
-    private List<ClientEvents> eventListeners = new ArrayList<>();
     private String dstAddress;
     private int dstPort;
     private String response = "";
@@ -35,6 +28,7 @@ public class Client extends AsyncTask<Void,Integer,Void> {
     private OutputStream outputStream = null;
     private Socket socket = null;
 
+    // Handles callbacks for the MainActivity
     private TaskFragment.TaskCallbacks mCallbacks;
 
     public Client(String addr, int port, TaskFragment.TaskCallbacks mCallbacks) {
@@ -43,49 +37,41 @@ public class Client extends AsyncTask<Void,Integer,Void> {
         this.mCallbacks = mCallbacks;
     }
 
-    public void addEventListener(ClientEvents event)
-    {
-        eventListeners.add(event);
-    }
-
-
     @Override
     protected Void doInBackground(Void... arg0) {
 
         try {
-            socket = new Socket(dstAddress, dstPort);
-            //publishProgress();
 
+            // Open socket at desired address and port.
+            socket = new Socket(dstAddress, dstPort);
             InputStream inputStream = socket.getInputStream();
-            //BufferedReader breader = new BufferedReader(new InputStreamReader(inputStream));
+
+            // TODO: Hardcoded Buffer... Should optimize this some way.
             byte[] buffer = new byte[1024];
             int bytesRead;
             String incomingData = "";
             outputStream = socket.getOutputStream();
 
+            // If we got the output stream, we're connected successfully.
             Log.i("Client","Connected to server");
-            for(ClientEvents in : eventListeners)
-            {
-                in.onConnected();
-            }
+
+            // Let everyone know we're connected.
             mCallbacks.onConnected();
 
+            // Read input stream
             while ((bytesRead = inputStream.read(buffer)) != -1) {
-                // Hardcoded Buffer... Should optimize this some way.
+                // TODO: Hardcoded Buffer... Should optimize this some way.
                 byteArrayOutputStream = new ByteArrayOutputStream(1024);
-                //byteArrayOutputStream.reset();
                 byteArrayOutputStream.write(buffer, 0, bytesRead);
+                // TODO: ASCII? Might want to change to other format.
                 incomingData += byteArrayOutputStream.toString("ASCII");
                 byteArrayOutputStream.flush();
-                //publishProgress();
-                for (ClientEvents in : eventListeners) {
-                    in.onIncomingData(incomingData);
-                }
                 mCallbacks.onIncomingData(incomingData);
                 incomingData = "";
             }
 
-        } catch (UnknownHostException e) {
+        }
+        catch (UnknownHostException e) {
 
             e.printStackTrace();
             Log.e("Client","UnknownHostException: " + e.toString());
@@ -93,7 +79,6 @@ public class Client extends AsyncTask<Void,Integer,Void> {
         catch (java.net.ConnectException e)
         {
             Log.e("Client","Couldn't connect to server");
-
         }
         catch (IOException e) {
 
@@ -108,16 +93,13 @@ public class Client extends AsyncTask<Void,Integer,Void> {
             {
                 Log.e( "Client", "IOException: " + e.toString() );
             }
-        } finally {
+        }
+        // Close the socket when we're done.
+        finally {
             if (socket != null) {
                 try {
                     socket.close();
                     Log.e( "Client", "Successfully closed the connection" );
-                    //publishProgress();
-                    for(ClientEvents in : eventListeners)
-                    {
-                        in.onDisconnected();
-                    }
                     mCallbacks.onDisconnected();
                 } catch (IOException e) {
 
@@ -125,15 +107,20 @@ public class Client extends AsyncTask<Void,Integer,Void> {
                 }
             }
         }
+
         publishProgress();
         return null;
     }
 
 
-
+    /**
+     * Sends a message to the server
+     * @param message The message to be sent.
+     * @return Response that confirms if the message was sent successfully or not.
+     */
     public String SendMessage(String message)
     {
-        Log.i("Client", message);
+        Log.i("Client", "Sending message: " + message);
         byteArrayOutputStream = new ByteArrayOutputStream(1024);
         byte[] buffer;
 
@@ -159,6 +146,7 @@ public class Client extends AsyncTask<Void,Integer,Void> {
         return response;
     }
 
+    // TODO: Implement feature.
     public Void Disconnect()
     {
         try
@@ -167,18 +155,10 @@ public class Client extends AsyncTask<Void,Integer,Void> {
             socket.getInputStream().close();
             socket.close();
             Log.e( "Client", "Successfully closed the connection" );
-            for(ClientEvents in : eventListeners)
-            {
-                in.onDisconnected();
-            }
             mCallbacks.onDisconnected();
         }catch (IOException e)
         {
             Log.e("Client","Socket disconnected");
-            for(ClientEvents in : eventListeners)
-            {
-                in.onDisconnected();
-            }
             mCallbacks.onDisconnected();
         }
         return null;

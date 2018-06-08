@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -15,23 +14,17 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
-import android.util.Xml;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fmontanari.mnuapp.R;
-import com.fmontanari.mnuapp.SavedDevices;
+import com.fmontanari.mnuapp.SavedServers;
 import com.fmontanari.mnuapp.data.DeviceInfo;
-
-import java.io.UnsupportedEncodingException;
 
 public class FirstRunActivity extends AppCompatActivity {
 
@@ -41,39 +34,6 @@ public class FirstRunActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private DeviceInfo deviceInfo;
 
-    public static final boolean isUTF8(final byte[] pText) {
-
-        int expectedLength = 0;
-
-        for (int i = 0; i < pText.length; i++) {
-            if ((pText[i] & 0b10000000) == 0b00000000) {
-                expectedLength = 1;
-            } else if ((pText[i] & 0b11100000) == 0b11000000) {
-                expectedLength = 2;
-            } else if ((pText[i] & 0b11110000) == 0b11100000) {
-                expectedLength = 3;
-            } else if ((pText[i] & 0b11111000) == 0b11110000) {
-                expectedLength = 4;
-            } else if ((pText[i] & 0b11111100) == 0b11111000) {
-                expectedLength = 5;
-            } else if ((pText[i] & 0b11111110) == 0b11111100) {
-                expectedLength = 6;
-            } else {
-                return false;
-            }
-
-            while (--expectedLength > 0) {
-                if (++i >= pText.length) {
-                    return false;
-                }
-                if ((pText[i] & 0b11000000) != 0b10000000) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,16 +49,14 @@ public class FirstRunActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (NoSwipeViewPager) findViewById(R.id.container);
-
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        // Default device info. Will get overwritten through the steps in this activity.
         deviceInfo = new DeviceInfo();
         deviceInfo.DeviceID = "DefaultTestID";
         deviceInfo.maxVotes = 10;
 
-
-
-
+        // The FloatingActionButton changes sections. Basically acts as a "Next" button.
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,9 +64,11 @@ public class FirstRunActivity extends AppCompatActivity {
 
                 if(mViewPager.getCurrentItem() != 2)
                 {
+                    // Which is our fragment?
                     switch (mViewPager.getCurrentItem())
                     {
                         case 0:
+                            // Fragment 1: Set device name
                             Fragment f1 = mSectionsPagerAdapter.getRegisteredFragment(0);
                             EditText t = (EditText)f1.getActivity().findViewById(R.id.txtDeviceName);
 
@@ -124,6 +84,7 @@ public class FirstRunActivity extends AppCompatActivity {
 
                         break;
                         case 1:
+                            // Fragment 2: Set max votes for this device.
                             Fragment f2 = mSectionsPagerAdapter.getRegisteredFragment(1);
                             EditText t2 = (EditText)f2.getActivity().findViewById(R.id.txtNumDelegaciones);
                             deviceInfo.maxVotes = Integer.parseInt(t2.getText().toString());
@@ -133,6 +94,8 @@ public class FirstRunActivity extends AppCompatActivity {
                     return;
                 }
 
+                // We're in the 3rd fragment. We already have the device info that we need. This fragment only handles
+                // connection, so it's safe to save the device info.
                 SharedPreferences connPrefs = getSharedPreferences("DevicePrefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = connPrefs.edit();
                 editor.putString("DeviceInfo", deviceInfo.toJSON());
@@ -140,7 +103,6 @@ public class FirstRunActivity extends AppCompatActivity {
 
                 Intent i = new Intent();
                 i.putExtra("info",deviceInfo.toJSON());
-                //Log.i("First Run", "Putting extra data:" + deviceInfo.toJSON());
                 setResult(RESULT_OK,i);
                 finish();
             }
@@ -171,8 +133,14 @@ public class FirstRunActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * onClickListener for ConnectionsManager button.
+     * Will show the ConnectionsManager Activity, that will setup a default connection data for this
+     * device.
+     * @param view The view that called this function.
+     */
     public void showConnectionsManager(View view) {
-        Intent theIntent = new Intent(this, SavedDevices.class);
+        Intent theIntent = new Intent(this, SavedServers.class);
         startActivityForResult(theIntent, GET_SERVER_ADDRESS);
     }
 
@@ -180,14 +148,16 @@ public class FirstRunActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         if (requestCode == GET_SERVER_ADDRESS) {
+            // This is the ConnectionsManager.
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
 
+                // Get connection data from Activity
                 String IP = data.getStringExtra("IP");
                 int port = data.getIntExtra("Port", 0000);
 
+                // Save the selected connection data as the default connection.
                 SharedPreferences prefs = getSharedPreferences("SavedConnections", Context.MODE_PRIVATE);
-
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString("DefaultConnection", IP);
                 editor.putInt("DefaultPort", port);
@@ -210,7 +180,6 @@ public class FirstRunActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Log.i("First Run", "Position " + position);
             switch(position)
             {
                 case 0:

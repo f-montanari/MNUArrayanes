@@ -24,21 +24,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SavedDevices"
+            android:name=".SavedServers"
             android:label="@string/title_activity_saved_connections"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-        </activity>
-        <activity
-            android:name=".Summary"
-            android:label="@string/title_activity_summary"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.fmontanari.mnuapp.MainActivity" />
         </activity>
         <activity
             android:name=".first_run.FirstRunActivity"

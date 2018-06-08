@@ -11,13 +11,17 @@ import java.util.ArrayList;
 /**
  * Created by Franco Montanari on 18/11/2016.
  */
-public abstract class SavedDevicesAdapter extends BaseAdapter
+
+/**
+ * Adapter class for the ListView.
+ */
+public abstract class SavedServerInformationAdapter extends BaseAdapter
 {
     private ArrayList<?> entradas;
     private int R_layout_IdView;
     private Context contexto;
 
-    public SavedDevicesAdapter(Context contexto, int R_layout_IdView, ArrayList<?> entradas) {
+    public SavedServerInformationAdapter(Context contexto, int R_layout_IdView, ArrayList<?> entradas) {
         super();
         this.contexto = contexto;
         this.entradas = entradas;

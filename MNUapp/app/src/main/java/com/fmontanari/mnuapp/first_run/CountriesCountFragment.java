@@ -1,7 +1,7 @@
 package com.fmontanari.mnuapp.first_run;
 
 /**
- * Created by Carlito on 28/04/2017.
+ * Created by Franco Montanari on 28/04/2017.
  */
 
 import android.support.v4.app.Fragment;

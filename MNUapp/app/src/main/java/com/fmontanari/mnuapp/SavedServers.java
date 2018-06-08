@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,25 +19,21 @@ import android.widget.TextView;
 import org.json.*;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 /**
  * Created by Franco Montanari on 24/11/2016.
  */
 
-public class SavedDevices extends AppCompatActivity {
+public class SavedServers extends AppCompatActivity {
 
-    ArrayList<SavedDevice> datos = new ArrayList<SavedDevice>();
+    ArrayList<SavedServerInformation> datos = new ArrayList<SavedServerInformation>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_devices);
 
-        // TODO: Implement settings loading here:
-        // datos.add(new SavedDevice("Test","localhost",1855));
-        // datos.add(new SavedDevice("Computer 1","192.168.0.4",1855));
-
-        // We need a way to now if we had some servers stored before.
+        // We need a way to know if we had some servers stored before.
         // We'll get that by using default connections. If there're any, then it means that
         // we have at least ONE connection, and we can safely add it to the list.
         SharedPreferences prefs = getSharedPreferences("SavedConnections", Context.MODE_PRIVATE);
@@ -53,24 +47,29 @@ public class SavedDevices extends AppCompatActivity {
         RefreshLists();
     }
 
+    /**
+     * Sets adapter for the ListView in this activity, and populates it with the saved data.
+     */
     private void RefreshLists() {
         ListView lista = (ListView) findViewById(R.id.savedDevicesListView);
 
-        lista.setAdapter(new SavedDevicesAdapter(this, R.layout.saved_devices, datos){
+        // Populate ListView
+        lista.setAdapter(new SavedServerInformationAdapter(this, R.layout.saved_devices, datos){
             @Override
             public void onEntrada(Object entrada, View view) {
                 TextView texto_superior_entrada = (TextView) view.findViewById(R.id.textView_superior);
-                texto_superior_entrada.setText(((SavedDevice) entrada).getName());
+                texto_superior_entrada.setText(((SavedServerInformation) entrada).getName());
 
                 TextView texto_inferior_entrada = (TextView) view.findViewById(R.id.textView_inferior);
-                texto_inferior_entrada.setText(((SavedDevice) entrada).getIPAddress() + ":" + ((SavedDevice) entrada).getPort());
+                texto_inferior_entrada.setText(((SavedServerInformation) entrada).getIPAddress() + ":" + ((SavedServerInformation) entrada).getPort());
             }
         });
 
+        // Set OnClickListener to select an item as the default server info
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> pariente, View view, int posicion, long id) {
-                SavedDevice elegido = (SavedDevice) pariente.getItemAtPosition(posicion);
+                SavedServerInformation elegido = (SavedServerInformation) pariente.getItemAtPosition(posicion);
                 Intent extraData = new Intent();
                 extraData.putExtra("IP",elegido.getIPAddress());
                 extraData.putExtra("Port",elegido.getPort());
@@ -80,21 +79,27 @@ public class SavedDevices extends AppCompatActivity {
         });
     }
 
+    /**
+     * Gets all saved connections in the SharedPrefs, and populates the data array.
+     * @param prefs SharedPreferences of this activity.
+     */
     private void LoadConnections(SharedPreferences prefs)
     {
         String connections = prefs.getString("Connections", null);
         if(connections != null)
         {
             try {
+                // Get all connections...
                 JSONArray connArray = new JSONArray(connections);
                 for(int i = 0; i< connArray.length(); i++)
                 {
+                    // ... and add them to the data array.
                     JSONObject connection = connArray.getJSONObject(i);
                     String Name = connection.getString("Name");
                     String IP = connection.getString("IP");
                     int Port = connection.getInt("Port");
 
-                    datos.add(new SavedDevice(Name,IP,Port));
+                    datos.add(new SavedServerInformation(Name,IP,Port));
                 }
             } catch (JSONException e) {
                 Log.e("JSON", "Corrupt data");
@@ -104,6 +109,12 @@ public class SavedDevices extends AppCompatActivity {
         }
     }
 
+    /**
+     * onClickListener for the "Add server" button.
+     * Shows a dialog asking for the new server IP and port.
+     * If the result's OK, we add it to the server list. Else we just don't do anything.
+     * @param view The View that called this sub.
+     */
     public void addServerToList(View view)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -125,7 +136,7 @@ public class SavedDevices extends AppCompatActivity {
                         int Port = Integer.parseInt(PortText.getText().toString());
                         String Name = NameText.getText().toString();
 
-                        datos.add(new SavedDevice(Name,IP,Port));
+                        datos.add(new SavedServerInformation(Name,IP,Port));
                         RefreshLists();
                         LinearLayout img = (LinearLayout) findViewById(R.id.imgLayout);
                         img.setVisibility(View.INVISIBLE);
@@ -140,24 +151,29 @@ public class SavedDevices extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * Helper function to save server information for later use.
+     */
     private void SaveData() {
         String jsonString;
         JSONArray connectionArray = new JSONArray();
+
+        // Convert data array to a JSON format
         for (int i=0;i<datos.toArray().length;i++)
         {
             JSONObject connectionObj = new JSONObject();
             try {
-                connectionObj.put("Name", ((SavedDevice) datos.toArray()[i]).getName());
-                connectionObj.put("IP",((SavedDevice) datos.toArray()[i]).getIPAddress());
-                connectionObj.put("Port",((SavedDevice) datos.toArray()[i]).getPort());
+                connectionObj.put("Name", ((SavedServerInformation) datos.toArray()[i]).getName());
+                connectionObj.put("IP",((SavedServerInformation) datos.toArray()[i]).getIPAddress());
+                connectionObj.put("Port",((SavedServerInformation) datos.toArray()[i]).getPort());
                 connectionArray.put(connectionObj);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
+        // And save it as a string in the SharedPreferences.
         jsonString = connectionArray.toString();
-
         SharedPreferences prefs = getSharedPreferences("SavedConnections",Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEdit = prefs.edit();
         prefsEdit.putString("Connections",jsonString);
