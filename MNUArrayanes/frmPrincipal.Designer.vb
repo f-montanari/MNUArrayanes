@@ -22,6 +22,7 @@ Partial Class frmPrincipal
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmPrincipal))
         Me.txtResultado = New System.Windows.Forms.TextBox()
         Me.cmdOpciones = New System.Windows.Forms.Button()
@@ -41,6 +42,7 @@ Partial Class frmPrincipal
         Me.txtNumDelegaciones = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.tmrCleanUI = New System.Windows.Forms.Timer(Me.components)
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -189,6 +191,10 @@ Partial Class frmPrincipal
         Me.TableLayoutPanel2.Controls.Add(Me.cmdOpciones, 1, 0)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         '
+        'tmrCleanUI
+        '
+        Me.tmrCleanUI.Interval = 10000
+        '
         'frmPrincipal
         '
         resources.ApplyResources(Me, "$this")
@@ -228,4 +234,5 @@ Partial Class frmPrincipal
     Friend WithEvents txtNumDesaprobados As Label
     Friend WithEvents cntAFavor As Contador
     Friend WithEvents cntEnContra As Contador
+    Friend WithEvents tmrCleanUI As Timer
 End Class

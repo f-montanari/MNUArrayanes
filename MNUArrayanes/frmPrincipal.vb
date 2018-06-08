@@ -124,6 +124,8 @@ Public Class frmPrincipal
         cntAFavor.SetCounter(intAprobados)
         cntEnContra.SetCounter(intDesaprobados)
         txtResultado.Text = ""
+
+        tmrCleanUI.Enabled = False
     End Sub
 
     ''' <summary>
@@ -131,9 +133,6 @@ Public Class frmPrincipal
     ''' </summary>
     Private Sub ShowVotaciones()
         lblStatus.Text = "Listo."
-
-        'txtNumAprobados.Text = intAprobados.ToString()
-        'txtNumDesaprobados.Text = intDesaprobados.ToString()
 
         cntAFavor.SetCounter(intAprobados)
         cntEnContra.SetCounter(intDesaprobados)
@@ -145,6 +144,8 @@ Public Class frmPrincipal
         ElseIf intAprobados = intDesaprobados Then
             txtResultado.Text = "EMPATE"
         End If
+
+        tmrCleanUI.Enabled = True
     End Sub
 
     ''' <summary>
@@ -406,6 +407,7 @@ Public Class frmPrincipal
             If Convert.ToInt16(txtNumDelegaciones.Text) > 0 Then
 
                 ResetVotationData()
+                tmrCleanUI.Enabled = False
                 Dim lstClients As New List(Of incomingClient)((listaClientes.Values))
 
                 ' Keep track of how many we were when the votation started.
@@ -441,9 +443,11 @@ Public Class frmPrincipal
             End If
         End If
 
-        ' TODO: Make a (static?) class for frmSettings to handle the data correctly.
+        ' TODO: Make a class for frmSettings to handle the data correctly?
         frmSettings.Show()
         frmSettings.Hide()
+
+        ResetVotationData()
 
         ' FIXME: Hardcoded port.
         srvInstance.PuertoDeEscucha = 1855
@@ -465,9 +469,14 @@ Public Class frmPrincipal
         frmSettings.RefreshConnectionsList()
     End Sub
 
-    Private Sub frmPrincipal_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
 
-        'TODO: Responsive design
+    Private Sub tmrCleanUI_Tick(sender As Object, e As EventArgs) Handles tmrCleanUI.Tick
+        ResetVotationData()
+    End Sub
+
+    Private Sub frmPrincipal_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
+        cntAFavor.SetCounter(intAprobados)
+        cntEnContra.SetCounter(intDesaprobados)
     End Sub
 
 #End Region
